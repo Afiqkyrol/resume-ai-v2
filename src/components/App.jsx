@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { generateResumeFromFreeForm } from "../services/resumeGenerator";
-import { exportToPDF } from "../services/pdfExport";
+import { exportToPDF, exportToPdfServer } from "../services/pdfExport";
 import { dummyFreeFormInput } from "../data/dummyData";
 import { FileText, Sparkles, Download, Edit3, Palette } from "lucide-react";
 import { ResumePreview } from "./ResumePreview";
@@ -39,11 +39,20 @@ function App() {
       const resumeElement = previewRef.current.querySelector(
         'div[style*="794px"]'
       );
+      // if (resumeElement) {
+      //   await exportToPDF(
+      //     resumeElement,
+      //     `${resumeData?.personalInfo.fullName.replace(/\s/g, "_")}_Resume.pdf`
+      //   );
+      // }
       if (resumeElement) {
-        await exportToPDF(
-          resumeElement,
-          `${resumeData?.personalInfo.fullName.replace(/\s/g, "_")}_Resume.pdf`
-        );
+        await exportToPdfServer({
+          html: resumeElement.outerHTML,
+          filename: `${resumeData?.personalInfo.fullName.replace(
+            /\s/g,
+            "_"
+          )}_Resume.pdf`,
+        });
       }
     }
   };

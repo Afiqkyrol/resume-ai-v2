@@ -1,16 +1,11 @@
 // Client-side call to server API for Puppeteer-based PDF generation.
 // Accepts data, style, template, and filename; returns void after triggering download.
-export const exportToPdfServer = async ({
-  data,
-  style,
-  template,
-  filename = "resume.pdf",
-}) => {
+export const exportToPdfServer = async ({ html, filename = "resume.pdf" }) => {
   try {
     const res = await fetch("/api/export-pdf", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data, style, template, filename }),
+      body: JSON.stringify({ html, filename }),
     });
     if (!res.ok) {
       const detail = await res.text();
