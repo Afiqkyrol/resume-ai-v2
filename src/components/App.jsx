@@ -68,8 +68,6 @@ function App() {
         'div[style*="794px"]'
       );
       if (resumeElement) {
-        console.log(resumeElement.outerHTML);
-
         await exportToPdfServer({
           html: resumeElement.outerHTML,
           filename: `${resumeData?.personalInfo.fullName.replace(
