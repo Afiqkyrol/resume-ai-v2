@@ -11,6 +11,7 @@ import { StyleControls } from "./StyleControl";
 
 function App() {
   const [step, setStep] = useState("input");
+  const [isGenerating, setIsGenerating] = useState(false);
   const [freeFormInput, setFreeFormInput] = useState("");
   const [resumeData, setResumeData] = useState(null);
   const [selectedTemplate, setSelectedTemplate] = useState("modern");
@@ -24,10 +25,37 @@ function App() {
   const [showStyleControls, setShowStyleControls] = useState(false);
   const previewRef = useRef(null);
 
-  const handleGenerate = () => {
-    const data = generateResumeFromFreeForm(freeFormInput);
-    setResumeData(data);
-    setStep("edit");
+  const handleGenerate = async () => {
+    if (!freeFormInput.trim() || isGenerating) return;
+    setIsGenerating(true);
+    try {
+      const res = await fetch("/api/generate-data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: freeFormInput }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        console.error("Generation error", err);
+        setIsGenerating(false);
+        return;
+      }
+
+      const dataObject = await res.json();
+      const obj =
+        typeof dataObject?.result === "string"
+          ? JSON.parse(dataObject.result)
+          : dataObject.result;
+
+      // const data = generateResumeFromFreeForm(obj);
+      setResumeData(obj);
+      setStep("edit");
+      setIsGenerating(false);
+    } catch (e) {
+      console.error(e);
+      setIsGenerating(false);
+    }
   };
 
   const handleLoadDummy = () => {
@@ -39,13 +67,9 @@ function App() {
       const resumeElement = previewRef.current.querySelector(
         'div[style*="794px"]'
       );
-      // if (resumeElement) {
-      //   await exportToPDF(
-      //     resumeElement,
-      //     `${resumeData?.personalInfo.fullName.replace(/\s/g, "_")}_Resume.pdf`
-      //   );
-      // }
       if (resumeElement) {
+        console.log(resumeElement.outerHTML);
+
         await exportToPdfServer({
           html: resumeElement.outerHTML,
           filename: `${resumeData?.personalInfo.fullName.replace(
@@ -118,28 +142,7 @@ function App() {
                 <textarea
                   value={freeFormInput}
                   onChange={(e) => setFreeFormInput(e.target.value)}
-                  placeholder="Example:
-Name: John Doe
-Email: john@example.com
-Phone: (555) 123-4567
-Location: New York, NY
-
-Experience
-Company: Tech Corp
-Position: Software Engineer
-Start: Jan 2020
-End: Present
-- Built scalable web applications
-- Led team of 5 developers
-
-Education
-University: MIT
-Degree: Bachelor of Science
-Field: Computer Science
-Graduation: May 2019
-
-Skills
-JavaScript, Python, React, Node.js, AWS"
+                  placeholder="Example: I'm a software engineer with 5 years of experience in React and Node.js. I worked at TechCorp as a Senior Developer and led a team of 3 people. I have a Bachelor's in Computer Science..."
                   rows={20}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
                 />
@@ -148,10 +151,21 @@ JavaScript, Python, React, Node.js, AWS"
               <button
                 onClick={handleGenerate}
                 disabled={!freeFormInput.trim()}
-                className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-lg font-semibold"
+                className={` ${
+                  isGenerating ? "cursor-not-allowed " : " hover:bg-blue-700"
+                } w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-lg font-semibold`}
               >
-                <Sparkles size={20} />
-                Generate Resume
+                {isGenerating ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Generating...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={20} />
+                    Generate Resume
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -168,7 +182,10 @@ JavaScript, Python, React, Node.js, AWS"
               </button>
               <div className="flex gap-3">
                 <button
-                  onClick={() => setShowStyleControls(!showStyleControls)}
+                  onClick={() => {
+                    setShowStyleControls(!showStyleControls);
+                    setShowEditor(false);
+                  }}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                     showStyleControls
                       ? "bg-blue-600 text-white"
@@ -179,7 +196,10 @@ JavaScript, Python, React, Node.js, AWS"
                   Style
                 </button>
                 <button
-                  onClick={() => setShowEditor(!showEditor)}
+                  onClick={() => {
+                    setShowEditor(!showEditor);
+                    setShowStyleControls(false);
+                  }}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                     showEditor
                       ? "bg-blue-600 text-white"

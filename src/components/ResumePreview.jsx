@@ -40,7 +40,7 @@ export const ResumePreview = ({ data, template, style }) => {
 
   return (
     <div className="relative">
-      {isOverflowing && (
+      {/* {isOverflowing && (
         <div className="mb-4 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
           <div className="flex items-start">
             <AlertCircle
@@ -58,10 +58,10 @@ export const ResumePreview = ({ data, template, style }) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       <div
-        className="bg-gray-100 p-8 rounded-lg shadow-inner overflow-y-auto"
+        className="bg-white p-8 rounded-lg shadow-inner overflow-y-auto"
         style={{ maxHeight: "800px" }}
       >
         <div
@@ -70,21 +70,22 @@ export const ResumePreview = ({ data, template, style }) => {
           style={{
             width: "794px",
             minHeight: `${A4_HEIGHT_PX}px`,
+            maxHeight: `${A4_HEIGHT_PX}px`,
+            overflowY: "scroll",
             position: "relative",
           }}
         >
           <div className="relative">
             {renderTemplate()}
-            {pages > 1 && (
-              <div
-                className="absolute left-0 right-0 border-t-2 border-red-500 border-dashed"
-                style={{ top: `${A4_HEIGHT_PX}px` }}
-              >
-                <span className="absolute right-0 -top-6 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                  Page break
-                </span>
-              </div>
-            )}
+            <div
+              id="break-line"
+              className="absolute left-0 right-0 border-t-1 border-red-500 border-dashed"
+              style={{ top: `${A4_HEIGHT_PX - 1}px` }}
+            >
+              <span className="absolute right-0 -top-6 bg-red-500 text-white text-xs px-2 py-1 rounded">
+                Page break
+              </span>
+            </div>
           </div>
         </div>
       </div>

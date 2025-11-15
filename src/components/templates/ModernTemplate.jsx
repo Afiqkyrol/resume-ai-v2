@@ -1,4 +1,16 @@
+import generateUniqueIds from "@/app/lib/generateUniqueIds";
+
 export const ModernTemplate = ({ data, style }) => {
+  const experienceWithIds = generateUniqueIds(data.experience);
+  const educationWithIds = generateUniqueIds(data.education);
+  const skillsWithIds = generateUniqueIds(data.skills);
+  const projectsWithIds = generateUniqueIds(data.projects);
+
+  data.experience = experienceWithIds;
+  data.education = educationWithIds;
+  data.skills = skillsWithIds;
+  data.projects = projectsWithIds;
+
   return (
     <div
       className="bg-white text-gray-800"

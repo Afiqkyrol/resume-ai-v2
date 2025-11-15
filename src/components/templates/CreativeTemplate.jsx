@@ -1,4 +1,16 @@
+import generateUniqueIds from "@/app/lib/generateUniqueIds";
+
 export const CreativeTemplate = ({ data, style }) => {
+  const experienceWithIds = generateUniqueIds(data.experience);
+  const educationWithIds = generateUniqueIds(data.education);
+  const skillsWithIds = generateUniqueIds(data.skills);
+  const projectsWithIds = generateUniqueIds(data.projects);
+
+  data.experience = experienceWithIds;
+  data.education = educationWithIds;
+  data.skills = skillsWithIds;
+  data.projects = projectsWithIds;
+
   return (
     <div
       className="bg-white"
@@ -9,7 +21,7 @@ export const CreativeTemplate = ({ data, style }) => {
       }}
     >
       <div className="flex gap-6">
-        <div className="w-1/3 bg-gray-800 text-white p-6 -m-8 mr-0">
+        <div className="w-1/3 bg-gray-800 text-white p-6 -m-11 mr-0">
           <div className="mb-6">
             <h1 className="text-3xl font-bold mb-2 break-words">
               {data.personalInfo.fullName}
@@ -75,7 +87,7 @@ export const CreativeTemplate = ({ data, style }) => {
           )}
         </div>
 
-        <div className="flex-1 pt-8">
+        <div className="flex-1 pt-2">
           {data.personalInfo.summary && (
             <div style={{ marginBottom: `${style.sectionSpacing}px` }}>
               <h2 className="text-lg font-bold text-gray-800 mb-3">About Me</h2>
