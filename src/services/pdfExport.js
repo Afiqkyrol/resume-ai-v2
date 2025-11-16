@@ -5,7 +5,7 @@ export const exportToPdfServer = async ({ html, filename = "resume.pdf" }) => {
     const res = await fetch("/api/export-pdf", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html: removeBreakLines(html), filename }),
+      body: JSON.stringify({ html, filename }),
     });
     if (!res.ok) {
       const detail = await res.text();
@@ -56,7 +56,3 @@ export const exportToPDF = async (element, filename = "resume.pdf") => {
   }
   pdf.save(filename);
 };
-
-function removeBreakLines(outerHtml) {
-  return outerHtml.replace(/<div id="break-line"[\s\S]*?<\/div>/, "");
-}

@@ -8,6 +8,8 @@ import { FileText, Sparkles, Download, Edit3, Palette } from "lucide-react";
 import { ResumePreview } from "./ResumePreview";
 import { ResumeEditor } from "./ResumeEditor";
 import { StyleControls } from "./StyleControl";
+import PaymentModal from "./modals/PaymentModal";
+import CustomerFormModal from "./modals/CustomerFormModal";
 
 function App() {
   const [step, setStep] = useState("input");
@@ -24,6 +26,13 @@ function App() {
   const [showEditor, setShowEditor] = useState(false);
   const [showStyleControls, setShowStyleControls] = useState(false);
   const previewRef = useRef(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [showBuyerModal, setShowBuyerModal] = useState(false);
+  const [buyerName, setBuyerName] = useState("");
+  const [buyerEmail, setBuyerEmail] = useState("");
+  const [buyerPhone, setBuyerPhone] = useState("");
+  const [buyerError, setBuyerError] = useState("");
 
   const handleGenerate = async () => {
     if (!freeFormInput.trim() || isGenerating) return;
@@ -76,6 +85,67 @@ function App() {
           )}_Resume.pdf`,
         });
       }
+    }
+  };
+
+  const handleCreateBill = async () => {
+    const name = buyerName.trim();
+    const email = buyerEmail.trim();
+    const phone = buyerPhone.trim();
+    if (!name) return setBuyerError("Please enter your name.");
+    if (!email || !email.includes("@"))
+      return setBuyerError("Please enter a valid email.");
+    if (!phone || phone.replace(/\D/g, "").length < 7)
+      return setBuyerError("Please enter a valid phone number.");
+
+    const resumeElement = previewRef.current.querySelector(
+      'div[style*="794px"]'
+    );
+    if (!resumeElement) {
+      setBuyerError("Resume not found.");
+      return;
+    }
+    const filename = `${resumeData?.personalInfo.fullName.replace(
+      /\s/g,
+      "_"
+    )}_Resume.pdf`;
+
+    try {
+      setIsProcessingPayment(true);
+      setBuyerError("");
+      // Persist current resume template+data (not raw HTML) so return page can auto-download after payment
+      try {
+        localStorage.setItem("resume:data", resumeElement.outerHTML);
+        localStorage.setItem("resume:filename", filename);
+        localStorage.setItem("resume:paidFlag", "pending");
+      } catch (e) {
+        console.warn("Failed to persist resume before payment", e);
+      }
+      const res = await fetch("/api/toyyibpay/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: 1.1,
+          billName: "Resume PDF",
+          billDescription: "Resume PDF Download",
+          name,
+          email,
+          phone,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error || "Failed to create payment");
+      if (json?.paymentUrl) {
+        window.location.href = json.paymentUrl;
+        return;
+      }
+      throw new Error("Missing paymentUrl from server");
+    } catch (e) {
+      console.error("ToyyibPay create error", e);
+      setBuyerError(e.message || "Payment error");
+    } finally {
+      setIsProcessingPayment(false);
+      setShowBuyerModal(false);
     }
   };
 
@@ -208,7 +278,7 @@ function App() {
                   Edit Content
                 </button>
                 <button
-                  onClick={handleExportPDF}
+                  onClick={() => setShowPaymentModal(true)}
                   className="flex items-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-semibold"
                 >
                   <Download size={18} />
@@ -278,6 +348,30 @@ function App() {
               </div>
             </div>
           </div>
+        )}
+        {showPaymentModal && (
+          <PaymentModal
+            setShowPaymentModal={setShowPaymentModal}
+            handleConfirmPayment={async () => {
+              setShowBuyerModal(true);
+              setShowPaymentModal(false);
+            }}
+            isProcessing={isProcessingPayment}
+          />
+        )}
+        {showBuyerModal && (
+          <CustomerFormModal
+            setShowBuyerModal={setShowBuyerModal}
+            buyerName={buyerName}
+            setBuyerName={setBuyerName}
+            buyerEmail={buyerEmail}
+            setBuyerEmail={setBuyerEmail}
+            buyerPhone={buyerPhone}
+            setBuyerPhone={setBuyerPhone}
+            buyerError={buyerError}
+            handleCreateBill={handleCreateBill}
+            isProcessing={isProcessingPayment}
+          />
         )}
       </div>
     </div>

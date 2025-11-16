@@ -139,7 +139,8 @@ export async function POST(req) {
       );
     }
 
-    const htmlContent = buildHtml(html);
+    const cleanHtml = removeBreakLines(html);
+    const htmlContent = buildHtml(cleanHtml);
 
     const isLocal = !process.env.VERCEL;
     const executablePath = isLocal
@@ -184,4 +185,8 @@ function buildHtml(element) {
       </body>
     </html>
   `;
+}
+
+function removeBreakLines(outerHtml) {
+  return outerHtml.replace(/<div id="break-line"[\s\S]*?<\/div>/, "");
 }
