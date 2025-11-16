@@ -437,12 +437,25 @@ function App() {
               >
                 <div
                   ref={previewRef}
-                  className="rounded-2xl border border-slate-200 bg-white shadow-lg p-6"
+                  className="rounded-2xl border border-slate-200 bg-white shadow-lg p-6 max-w-screen"
                 >
                   <ResumePreview
                     data={resumeData}
                     template={selectedTemplate}
                     style={resumeStyle}
+                  />
+                </div>
+              </div>
+              <div className="col-span-12 lg:col-span-4 space-y-6 sm:hidden">
+                <div className="rounded-xl border border-slate-200 bg-white/80 backdrop-blur p-5 shadow-sm">
+                  <ResumeEditor data={resumeData} onUpdate={setResumeData} />
+                </div>
+              </div>
+              <div className="col-span-12 lg:col-span-3 space-y-6 sm:hidden">
+                <div className="rounded-xl border border-slate-200 bg-white/80 backdrop-blur p-5 shadow-sm">
+                  <StyleControls
+                    style={resumeStyle}
+                    onUpdate={setResumeStyle}
                   />
                 </div>
               </div>
