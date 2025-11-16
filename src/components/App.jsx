@@ -135,7 +135,7 @@ function App() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: 1.1,
+          amount: 2,
           billName: "Resume PDF",
           billDescription: "Resume PDF Download",
           name,

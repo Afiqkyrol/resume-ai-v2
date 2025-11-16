@@ -38,7 +38,7 @@ export async function POST(req) {
     const base = process.env.TOYYIBPAY_BASE_URL || "https://toyyibpay.com";
     const createUrl = `${base}/index.php/api/createBill`;
 
-    const amount = Number(body.amount || 1.1) * 100; // in cents
+    const amount = Number(body.amount || 2) * 100; // in cents
     const billName = body.billName || "Resume PDF";
     const billDescription = body.billDescription || "Resume PDF Download";
     const billExternalReferenceNo = body.referenceNo || `RES-${Date.now()}`;
