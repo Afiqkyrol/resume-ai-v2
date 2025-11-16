@@ -22,8 +22,7 @@ export async function POST(req) {
         status: 400,
       });
 
-    const isDev = false;
-    // !process.env.VERCEL;
+    const isDev = !process.env.VERCEL;
     if (isDev && billCode.startsWith("MOCK-")) {
       // Immediately mark as paid for mock codes
       return new Response(

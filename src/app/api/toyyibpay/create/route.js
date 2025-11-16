@@ -13,8 +13,7 @@ function requiredEnv(name) {
 export async function POST(req) {
   try {
     const body = await req.json().catch(() => ({}));
-    const isDev = false;
-    // !process.env.VERCEL;
+    const isDev = !process.env.VERCEL;
 
     // In development/local, mock ToyyibPay and return a success redirect URL
     if (isDev) {

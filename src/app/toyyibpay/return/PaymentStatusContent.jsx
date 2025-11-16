@@ -43,6 +43,7 @@ export default function PaymentStatusContent() {
             await exportToPdfServer({
               html: data,
               filename: filename,
+              billCode,
             });
           } catch (e) {
             console.warn("Auto-download after payment failed", e);
@@ -74,6 +75,7 @@ export default function PaymentStatusContent() {
       await exportToPdfServer({
         html: data,
         filename: filename,
+        billCode,
       });
     } catch (e) {
       console.error("Manual download failed", e);
