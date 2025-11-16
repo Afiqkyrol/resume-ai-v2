@@ -173,172 +173,272 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <header className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <FileText size={40} className="text-blue-600" />
-            <h1 className="text-4xl font-bold text-gray-900">
-              AI Resume Builder
-            </h1>
+    <div className="min-h-screen hero-gradient scroll-smooth">
+      {/* Action / nav bar */}
+      <div className="sticky top-0 z-40 backdrop-blur-xl bg-white/70 action-bar-shadow border-b border-slate-200">
+        <div className="mx-auto max-w-7xl px-5 flex items-center justify-between h-16">
+          <div className="flex items-center gap-2">
+            <div className="pulse-border rounded-lg p-2 bg-white/60">
+              <FileText size={28} className="text-blue-600" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold tracking-wide text-slate-600">
+                Resume AI
+              </span>
+              <span className="text-xs text-slate-500">
+                Smart professional profiles
+              </span>
+            </div>
           </div>
-          <p className="text-gray-600 text-lg">
-            Generate professional resumes from free-form text
-          </p>
-        </header>
+          {step === "edit" && resumeData && (
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  setShowStyleControls(!showStyleControls);
+                  setShowEditor(false);
+                }}
+                className={`hidden sm:inline-flex px-4 py-2 rounded-md text-sm font-medium transition-colors border ${
+                  showStyleControls
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "bg-white/70 hover:bg-blue-50 text-slate-700 border-slate-300"
+                }`}
+              >
+                <Palette size={16} />
+                <span className="ml-2">Style</span>
+              </button>
+              <button
+                onClick={() => {
+                  setShowEditor(!showEditor);
+                  setShowStyleControls(false);
+                }}
+                className={`hidden sm:inline-flex px-4 py-2 rounded-md text-sm font-medium transition-colors border ${
+                  showEditor
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "bg-white/70 hover:bg-blue-50 text-slate-700 border-slate-300"
+                }`}
+              >
+                <Edit3 size={16} />
+                <span className="ml-2">Edit</span>
+              </button>
+              <button
+                onClick={() => setShowPaymentModal(true)}
+                className="relative inline-flex items-center gap-2 px-5 py-2 rounded-md text-sm font-semibold text-white bg-emerald-600 shadow-lg shadow-blue-600/30 hover:shadow-xl hover:brightness-110 transition-all"
+              >
+                <Download size={16} />
+                <span>Export PDF</span>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 py-10">
+        {/* Hero Section */}
+        {step === "input" && (
+          <header className="relative mb-14 fade-in">
+            <div className="absolute inset-0 bg-pattern opacity-30 rounded-3xl" />
+            <div className="relative text-center px-6 py-14 glass-panel rounded-3xl">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
+                <div className="rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-3 shadow-lg shadow-indigo-500/30">
+                  <FileText size={42} className="text-white" />
+                </div>
+                <h1 className="gradient-text text-5xl font-extrabold tracking-tight">
+                  AI Resume Builder
+                </h1>
+              </div>
+              <p className="max-w-2xl mx-auto text-lg text-slate-600 leading-relaxed">
+                Transform your career story into a polished, high-impact resume.
+                Paste raw experience details and let intelligent structuring
+                craft a professional layout.
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3 text-xs font-medium">
+                <span className="px-3 py-1 rounded-full bg-blue-600/10 text-blue-700 border border-blue-600/20">
+                  ATS Friendly
+                </span>
+                <span className="px-3 py-1 rounded-full bg-indigo-600/10 text-indigo-700 border border-indigo-600/20">
+                  Template Library
+                </span>
+                <span className="px-3 py-1 rounded-full bg-emerald-600/10 text-emerald-700 border border-emerald-600/20">
+                  Live Styling
+                </span>
+                <span className="px-3 py-1 rounded-full bg-pink-600/10 text-pink-700 border border-pink-600/20">
+                  PDF Export
+                </span>
+              </div>
+            </div>
+          </header>
+        )}
 
         {step === "input" && (
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  Enter Your Information
-                </h2>
-                <button
-                  onClick={handleLoadDummy}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm"
-                >
-                  Load Sample Data
-                </button>
+          <div className="max-w-5xl mx-auto fade-in">
+            <div className="glass-panel rounded-2xl p-10 border border-white/40">
+              <div className="flex flex-col lg:flex-row gap-10">
+                <div className="flex-1 space-y-6">
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-3xl font-bold text-slate-800 tracking-tight">
+                      Paste Raw Content
+                    </h2>
+                    <button
+                      onClick={handleLoadDummy}
+                      className="px-4 py-2 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors text-sm font-medium"
+                    >
+                      Load Sample
+                    </button>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Provide informal or structured career details: roles,
+                    responsibilities, achievements, skills, education,
+                    certifications, projects. The AI will normalize and
+                    structure this into a polished resume you can refine
+                    further.
+                  </p>
+                  <textarea
+                    value={freeFormInput}
+                    onChange={(e) => setFreeFormInput(e.target.value)}
+                    placeholder="Lead developer at TechCorp driving frontend modernization..."
+                    rows={18}
+                    className="w-full px-4 py-3 rounded-xl border border-slate-300/70 bg-white/70 backdrop-blur placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/60 font-mono text-sm shadow-inner"
+                  />
+                  <div className="subtle-divider" />
+                  <button
+                    onClick={handleGenerate}
+                    disabled={!freeFormInput.trim()}
+                    className={`group relative inline-flex items-center justify-center gap-2 w-full rounded-xl px-6 py-4 text-lg font-semibold tracking-wide transition-all ${
+                      isGenerating
+                        ? "cursor-not-allowed bg-slate-400 text-white"
+                        : "bg-gradient-to-r from-blue-600 to-emerald-600 text-white hover:shadow-xl hover:shadow-blue-600/30"
+                    }`}
+                  >
+                    {isGenerating ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Generating...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles size={22} className="animate-pulse" />
+                        <span>Generate My Resume</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="w-full lg:max-w-sm space-y-6">
+                  <div className="rounded-xl border border-slate-200 bg-white/70 backdrop-blur p-6 shadow-sm">
+                    <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-600 mb-4">
+                      Tips
+                    </h3>
+                    <ul className="space-y-3 text-sm text-slate-600">
+                      <li className="flex gap-2">
+                        <span className="text-blue-600">•</span> Use action
+                        verbs ("Optimized", "Led", "Implemented").
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="text-indigo-600">•</span> Quantify
+                        impact ("Reduced latency by 32%").
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="text-emerald-600">•</span> Include
+                        stack & tools (React, AWS, Terraform).
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="text-pink-600">•</span> Separate items
+                        with blank lines for clarity.
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-blue-50 p-6 shadow-inner">
+                    <h4 className="font-semibold text-slate-800 mb-2">
+                      Workflow
+                    </h4>
+                    <ol className="list-decimal list-inside space-y-1 text-sm text-slate-600">
+                      <li>Paste raw experience.</li>
+                      <li>Generate structured resume.</li>
+                      <li>Tweak content & styling.</li>
+                      <li>Export polished PDF.</li>
+                    </ol>
+                  </div>
+                </div>
               </div>
-
-              <div className="mb-6">
-                <p className="text-sm text-gray-600 mb-4">
-                  Paste your resume information in any format. Include sections
-                  like: Experience, Education, Skills, Projects, etc.
-                </p>
-                <textarea
-                  value={freeFormInput}
-                  onChange={(e) => setFreeFormInput(e.target.value)}
-                  placeholder="Example: I'm a software engineer with 5 years of experience in React and Node.js. I worked at TechCorp as a Senior Developer and led a team of 3 people. I have a Bachelor's in Computer Science..."
-                  rows={20}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
-                />
-              </div>
-
-              <button
-                onClick={handleGenerate}
-                disabled={!freeFormInput.trim()}
-                className={` ${
-                  isGenerating ? "cursor-not-allowed " : " hover:bg-blue-700"
-                } w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-lg font-semibold`}
-              >
-                {isGenerating ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>Generating...</span>
-                  </>
-                ) : (
-                  <>
-                    <Sparkles size={20} />
-                    Generate Resume
-                  </>
-                )}
-              </button>
             </div>
           </div>
         )}
 
         {step === "edit" && resumeData && (
-          <div>
-            <div className="mb-6 flex justify-between items-center">
+          <div className="space-y-10 fade-in">
+            <div className="flex items-center justify-between gap-3">
               <button
                 onClick={() => setStep("input")}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white/70 border border-slate-300 text-slate-700 hover:bg-slate-100 transition-all"
               >
-                ← Back to Input
+                Back
               </button>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => {
-                    setShowStyleControls(!showStyleControls);
-                    setShowEditor(false);
-                  }}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                    showStyleControls
-                      ? "bg-blue-600 text-white"
-                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                  }`}
-                >
-                  <Palette size={18} />
-                  Style
-                </button>
-                <button
-                  onClick={() => {
-                    setShowEditor(!showEditor);
-                    setShowStyleControls(false);
-                  }}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                    showEditor
-                      ? "bg-blue-600 text-white"
-                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                  }`}
-                >
-                  <Edit3 size={18} />
-                  Edit Content
-                </button>
-                <button
-                  onClick={() => setShowPaymentModal(true)}
-                  className="flex items-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-semibold"
-                >
-                  <Download size={18} />
-                  Export PDF
-                </button>
-              </div>
+              <span className="text-xs font-medium text-slate-500">
+                Customize then export your professionally formatted PDF.
+              </span>
             </div>
-
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                Choose Template
+            <div>
+              <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                Templates
               </h3>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
                 {templates.map((template) => (
                   <button
                     key={template.value}
                     onClick={() => setSelectedTemplate(template.value)}
-                    className={`p-4 rounded-lg border-2 transition-all ${
+                    className={`template-card group p-5 rounded-xl border relative overflow-hidden text-left ${
                       selectedTemplate === template.value
                         ? "border-blue-600 bg-blue-50"
-                        : "border-gray-200 bg-white hover:border-blue-300"
+                        : "border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50"
                     }`}
                   >
-                    <h4 className="font-semibold text-gray-900 mb-1">
+                    <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-tr from-blue-500/10 to-indigo-500/20 blur-2xl" />
+                    <h4 className="font-semibold text-slate-800 mb-1 flex items-center gap-2">
                       {template.label}
+                      {selectedTemplate === template.value && (
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-blue-600 text-white">
+                          Active
+                        </span>
+                      )}
                     </h4>
-                    <p className="text-xs text-gray-600">
+                    <p className="text-xs text-slate-600 leading-relaxed">
                       {template.description}
                     </p>
                   </button>
                 ))}
               </div>
             </div>
-
-            <div className="grid grid-cols-12 gap-6">
+            <div className="grid grid-cols-12 gap-8">
               {showEditor && (
-                <div className="col-span-4">
-                  <ResumeEditor data={resumeData} onUpdate={setResumeData} />
+                <div className="col-span-12 lg:col-span-4 space-y-6">
+                  <div className="rounded-xl border border-slate-200 bg-white/80 backdrop-blur p-5 shadow-sm">
+                    <ResumeEditor data={resumeData} onUpdate={setResumeData} />
+                  </div>
                 </div>
               )}
-
               {showStyleControls && !showEditor && (
-                <div className="col-span-3">
-                  <StyleControls
-                    style={resumeStyle}
-                    onUpdate={setResumeStyle}
-                  />
+                <div className="col-span-12 lg:col-span-3 space-y-6">
+                  <div className="rounded-xl border border-slate-200 bg-white/80 backdrop-blur p-5 shadow-sm">
+                    <StyleControls
+                      style={resumeStyle}
+                      onUpdate={setResumeStyle}
+                    />
+                  </div>
                 </div>
               )}
-
               <div
                 className={
                   showEditor
-                    ? "col-span-8"
+                    ? "col-span-12 lg:col-span-8"
                     : showStyleControls
-                    ? "col-span-9"
+                    ? "col-span-12 lg:col-span-9"
                     : "col-span-12"
                 }
               >
-                <div ref={previewRef}>
+                <div
+                  ref={previewRef}
+                  className="rounded-2xl border border-slate-200 bg-white shadow-lg p-6"
+                >
                   <ResumePreview
                     data={resumeData}
                     template={selectedTemplate}

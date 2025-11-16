@@ -21,7 +21,7 @@ export const CreativeTemplate = ({ data, style }) => {
       }}
     >
       <div className="flex gap-6">
-        <div className="w-1/3 bg-gray-800 text-white p-6 -m-11 mr-0">
+        <div className="w-1/3 min-h-[1126px] bg-gray-800 text-white p-6 -m-11 mr-0">
           <div className="mb-6">
             <h1 className="text-3xl font-bold mb-2 break-words">
               {data.personalInfo.fullName}
