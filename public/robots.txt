@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://resume.cerouno.dev
+
+# Sitemaps
+Sitemap: https://resume.cerouno.dev/sitemap.xml
