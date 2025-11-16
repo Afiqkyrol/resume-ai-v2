@@ -1,52 +1,8 @@
-export const dummyFreeFormInput = `Name: Sarah Johnson
-Email: sarah.johnson@email.com
-Phone: (555) 123-4567
-Location: San Francisco, CA
-LinkedIn: linkedin.com/in/sarahjohnson
-Summary: Full-stack software engineer with 5 years of experience building scalable web applications. Passionate about clean code, user experience, and innovative solutions.
+export const dummyFreeFormInput = `Hi, I’m Jane Doe! I’m a UI/UX designer based in Kuala Lumpur, and I’ve been working in the design field for about five years. I really love creating digital experiences that feel intuitive and engaging. I’m comfortable with tools like Figma, Adobe XD, and Sketch, and I have a basic understanding of HTML and CSS, which helps me communicate better with developers.
 
-Experience
+Most recently, I worked at Creative Studio as a Senior UI/UX Designer. During my time there, I led a major redesign of our main product which ended up increasing user retention by around 25%. I also enjoyed mentoring a few junior designers and collaborating with different teams to improve overall workflows. Before that, I was at PixelWorks where I designed responsive web and mobile interfaces for multiple clients. That role really helped me sharpen my prototyping and user testing skills.
 
-Company: TechCorp Inc.
-Position: Senior Software Engineer
-Location: San Francisco, CA
-Start: January 2022
-End: Present
-- Led development of microservices architecture serving 2M+ users
-- Improved application performance by 40% through optimization
-- Mentored junior developers and conducted code reviews
-- Implemented CI/CD pipelines reducing deployment time by 60%
+I graduated with a Bachelor of Design (Graphic & Interactive) from the University of Malaya in 2018. Since then, I’ve continued learning on my own through certifications, including the Google UX Design Certificate and Certified Usability Analyst (CUA).
 
-Company: StartupXYZ
-Position: Full Stack Developer
-Location: San Francisco, CA
-Start: June 2019
-End: December 2021
-- Built responsive web applications using React and Node.js
-- Developed RESTful APIs handling 10K+ requests per day
-- Collaborated with design team to implement pixel-perfect UIs
-- Reduced bug reports by 35% through comprehensive testing
-
-Education
-
-University: University of California, Berkeley
-Degree: Bachelor of Science
-Field: Computer Science
-Location: Berkeley, CA
-Graduation: May 2019
-GPA: 3.8
-
-Skills
-JavaScript, TypeScript, React, Node.js, Python, PostgreSQL, MongoDB, AWS, Docker, Kubernetes, Git, Agile, REST APIs, GraphQL, CI/CD
-
-Projects
-
-Project: E-commerce Platform
-Description: Full-stack e-commerce solution with payment integration and inventory management
-Technologies: React, Node.js, PostgreSQL, Stripe
-Link: github.com/sarah/ecommerce
-
-Project: Task Management App
-Description: Collaborative task management tool with real-time updates
-Technologies: React, Firebase, Tailwind CSS
-Link: github.com/sarah/taskapp`;
+Some projects I’m really proud of include the TravelMate App, a mobile app I designed from concept to prototype, and the ShopEasy E-commerce redesign, where I improved the checkout flow and helped reduce cart abandonment by about 18%.
+`;

@@ -4,12 +4,22 @@ import { useState, useRef } from "react";
 import { generateResumeFromFreeForm } from "../services/resumeGenerator";
 import { exportToPDF, exportToPdfServer } from "../services/pdfExport";
 import { dummyFreeFormInput } from "../data/dummyData";
-import { FileText, Sparkles, Download, Edit3, Palette } from "lucide-react";
+import {
+  FileText,
+  Sparkles,
+  Download,
+  Edit3,
+  Palette,
+  Mail,
+  Phone,
+  User,
+} from "lucide-react";
 import { ResumePreview } from "./ResumePreview";
 import { ResumeEditor } from "./ResumeEditor";
 import { StyleControls } from "./StyleControl";
 import PaymentModal from "./modals/PaymentModal";
 import CustomerFormModal from "./modals/CustomerFormModal";
+import Image from "next/image";
 
 function App() {
   const [step, setStep] = useState("input");
@@ -179,11 +189,25 @@ function App() {
         <div className="mx-auto max-w-7xl px-5 flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <div className="pulse-border rounded-lg p-2 bg-white/60">
-              <FileText size={28} className="text-blue-600" />
+              <Image
+                src="/cerouno/logo-no-bg.png"
+                alt="Cerouno logo"
+                width={36}
+                height={36}
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-sm font-semibold tracking-wide text-slate-600">
-                Resume AI
+                Resume AI{" "}
+                <span className="gradient-text">
+                  <a
+                    href="https://cerouno.dev"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    by Cerouno
+                  </a>
+                </span>
               </span>
               <span className="text-xs text-slate-500">
                 Smart professional profiles
@@ -239,8 +263,13 @@ function App() {
             <div className="absolute inset-0 bg-pattern opacity-30 rounded-3xl" />
             <div className="relative text-center px-6 py-14 glass-panel rounded-3xl">
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
-                <div className="rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-3 shadow-lg shadow-indigo-500/30">
-                  <FileText size={42} className="text-white" />
+                <div className="rounded-xl bg-gradient-to-tr from-gray-100 to-gray-200 p-3 shadow-lg shadow-indigo-500/30">
+                  <Image
+                    src="/cerouno/logo-no-bg.png"
+                    alt="Cerouno logo"
+                    width={46}
+                    height={46}
+                  />
                 </div>
                 <h1 className="gradient-text text-5xl font-extrabold tracking-tight">
                   AI Resume Builder
@@ -276,7 +305,7 @@ function App() {
                 <div className="flex-1 space-y-6">
                   <div className="flex justify-between items-center">
                     <h2 className="text-3xl font-bold text-slate-800 tracking-tight">
-                      Paste Raw Content
+                      Fill in Your Experience
                     </h2>
                     <button
                       onClick={handleLoadDummy}
@@ -295,7 +324,7 @@ function App() {
                   <textarea
                     value={freeFormInput}
                     onChange={(e) => setFreeFormInput(e.target.value)}
-                    placeholder="Lead developer at TechCorp driving frontend modernization..."
+                    placeholder="I'm a software engineer with 5 years of experience in React and Node.js. I worked at TechCorp as a Senior Developer and led a team of 3 people. I have a Bachelor's in Computer Science..."
                     rows={18}
                     className="w-full px-4 py-3 rounded-xl border border-slate-300/70 bg-white/70 backdrop-blur placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/60 font-mono text-sm shadow-inner"
                   />
@@ -351,7 +380,7 @@ function App() {
                       Workflow
                     </h4>
                     <ol className="list-decimal list-inside space-y-1 text-sm text-slate-600">
-                      <li>Paste raw experience.</li>
+                      <li>Filled in your experience.</li>
                       <li>Generate structured resume.</li>
                       <li>Tweak content & styling.</li>
                       <li>Export polished PDF.</li>
@@ -360,6 +389,125 @@ function App() {
                 </div>
               </div>
             </div>
+            {/* Services / Features Section */}
+            <section className="mt-16 space-y-8">
+              <div className="text-center max-w-2xl mx-auto space-y-3">
+                <h2 className="text-2xl font-bold text-slate-800 tracking-tight">
+                  Why Use This Builder?
+                </h2>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Designed to reduce friction. These capabilities help you
+                  progress from raw text to a polished, ATS-friendly PDF
+                  quickly.
+                </p>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  {
+                    title: "Fast AI Structuring",
+                    desc: "Convert unformatted career notes into organized sections instantly.",
+                    icon: <Sparkles size={20} className="text-blue-600" />,
+                  },
+                  {
+                    title: "Live Styling Controls",
+                    desc: "Adjust typography, spacing and layout without leaving the preview.",
+                    icon: <Palette size={20} className="text-emerald-600" />,
+                  },
+                  {
+                    title: "Multiple Templates",
+                    desc: "Switch between modern, minimal, classic and creative designs.",
+                    icon: <FileText size={20} className="text-indigo-600" />,
+                  },
+                  {
+                    title: "High-Quality PDF Export",
+                    desc: "Generate pixel-perfect, professional PDF output ready for applications.",
+                    icon: <Download size={20} className="text-pink-600" />,
+                  },
+                  {
+                    title: "Privacy First",
+                    desc: "Nothing stored server-side beyond payment verification; your data stays local.",
+                    icon: <Edit3 size={20} className="text-slate-600" />,
+                  },
+                  {
+                    title: "ATS Friendly Markup",
+                    desc: "Structured content improves parsing in applicant tracking systems.",
+                    icon: <FileText size={20} className="text-amber-600" />,
+                  },
+                ].map((f, i) => (
+                  <div
+                    key={i}
+                    className="group relative rounded-xl border border-slate-200 bg-white/70 backdrop-blur p-5 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="shrink-0 rounded-md bg-gradient-to-br from-white to-slate-100 p-2 shadow-inner">
+                        {f.icon}
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-sm font-semibold text-slate-800">
+                          {f.title}
+                        </h3>
+                        <p className="text-xs text-slate-600 leading-relaxed">
+                          {f.desc}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-blue-50/40 to-emerald-50/40" />
+                  </div>
+                ))}
+              </div>
+            </section>
+            {/* Contact Section */}
+            <section className="mt-16" id="contact">
+              <div className="max-w-3xl mx-auto glass-panel rounded-2xl p-8 border border-white/40">
+                <h2 className="text-2xl font-bold text-slate-800 tracking-tight text-center mb-6">
+                  Contact
+                </h2>
+                <p className="text-center text-slate-600 text-sm leading-relaxed mb-6">
+                  For enquiries or if you experience any issues, reach out using
+                  the details below.
+                </p>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white/70 backdrop-blur p-4">
+                    <div className="rounded-md bg-blue-50 p-2">
+                      <User size={18} className="text-blue-600" />
+                    </div>
+                    <div className="text-sm">
+                      <div className="font-semibold text-slate-800">Name</div>
+                      <div className="text-slate-600">Afiq</div>
+                    </div>
+                  </div>
+                  <a
+                    href="mailto:afiq@cerouno.dev"
+                    className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white/70 backdrop-blur p-4 hover:bg-blue-50/50 transition-colors"
+                  >
+                    <div className="rounded-md bg-blue-50 p-2">
+                      <Mail size={18} className="text-blue-600" />
+                    </div>
+                    <div className="text-sm">
+                      <div className="font-semibold text-slate-800">Email</div>
+                      <div className="text-slate-600 break-all">
+                        afiq@cerouno.dev
+                      </div>
+                    </div>
+                  </a>
+                  <a
+                    href="https://wa.me/60142271936"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Chat on WhatsApp"
+                    className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white/70 backdrop-blur p-4 hover:bg-emerald-50/50 transition-colors"
+                  >
+                    <div className="rounded-md bg-emerald-50 p-2">
+                      <Phone size={18} className="text-emerald-600" />
+                    </div>
+                    <div className="text-sm">
+                      <div className="font-semibold text-slate-800">Phone</div>
+                      <div className="text-slate-600">+60142271936</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </section>
           </div>
         )}
 
@@ -487,6 +635,63 @@ function App() {
           />
         )}
       </div>
+      {/* Footer */}
+      <footer className="mt-24 border-t border-slate-200/70 bg-white/60 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-6 py-10 grid gap-10 md:grid-cols-3">
+          <div className="space-y-3">
+            <h4 className="font-semibold text-slate-800 flex items-center gap-2">
+              <FileText size={18} className="text-blue-600" /> Resume AI{" "}
+              <span className="gradient-text">
+                <a
+                  href="https://cerouno.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  by Cerouno
+                </a>
+              </span>
+            </h4>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Generate structured, elegant resumes from free-form text with
+              real-time styling and professional export.
+            </p>
+          </div>
+          <div className="space-y-3">
+            <h5 className="text-sm font-semibold text-slate-700 uppercase tracking-wide">
+              Resources
+            </h5>
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li>Templates Overview</li>
+              <li>Styling Guide</li>
+              <li>Payment & PDF Export</li>
+              <li>Privacy</li>
+            </ul>
+          </div>
+          <div className="space-y-3">
+            <h5 className="text-sm font-semibold text-slate-700 uppercase tracking-wide">
+              Get Started
+            </h5>
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li>Paste Your Content</li>
+              <li>Choose Template</li>
+              <li>Refine & Style</li>
+              <li>Export PDF</li>
+            </ul>
+          </div>
+        </div>
+        <div className="text-center text-xs text-slate-500 py-6">
+          © {new Date().getFullYear()} Resume AI by{" "}
+          <a
+            href="https://cerouno.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gradient-text"
+          >
+            Cerouno
+          </a>
+          . All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 }
