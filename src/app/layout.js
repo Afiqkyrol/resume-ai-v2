@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title:
-    "Resume AI Builder by Cerouno | Create ATS-Friendly Resumes in Seconds",
+    "Malaysia Resume AI Builder by Cerouno | Create ATS-Friendly Resumes in Seconds",
   description:
-    "Resume AI Builder by Cerouno lets you instantly generate clean, modern, ATS-friendly resumes. Paste your career info and get a polished, one-page resume.",
+    "Malaysia Resume AI Builder by Cerouno lets you instantly generate clean, modern, ATS-friendly resumes. Paste your career info and get a polished, one-page resume.",
   keywords: [
     "AI resume builder",
     "resume generator",
@@ -24,6 +24,7 @@ export const metadata = {
     "professional resume",
     "resume creator",
     "Cerouno",
+    "Malaysia resume",
   ],
 };
 
