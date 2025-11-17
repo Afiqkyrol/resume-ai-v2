@@ -45,6 +45,14 @@ function App() {
   const [buyerError, setBuyerError] = useState("");
 
   const handleGenerate = async () => {
+    if (!process.env.VERCEL) {
+      const data = generateResumeFromFreeForm(dummyFreeFormInput);
+      console.log(data);
+
+      setResumeData(data);
+      setStep("edit");
+      return;
+    }
     if (!freeFormInput.trim() || isGenerating) return;
     setIsGenerating(true);
     try {
