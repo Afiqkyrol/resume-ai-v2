@@ -367,9 +367,9 @@ function App() {
                   </div>
                   <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                     <div className="flex -space-x-2">
-                      <span className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-blue-500 to-sky-400 border border-slate-900" />
+                      {/* <span className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-blue-500 to-sky-400 border border-slate-900" />
                       <span className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-emerald-500 to-lime-400 border border-slate-900" />
-                      <span className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border border-slate-900" />
+                      <span className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border border-slate-900" /> */}
                     </div>
                     <p className="text-xs sm:text-[11px] text-slate-400">
                       Used by developers, PMs, designers and students.
@@ -383,7 +383,7 @@ function App() {
                   <div className="relative rounded-2xl border border-slate-700 bg-slate-950/80 shadow-2xl shadow-slate-950/80 overflow-hidden w-full max-w-md">
                     <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
                       <div className="text-center p-6">
-                        <FileText
+                        {/* <FileText
                           size={48}
                           className="text-slate-400 mx-auto mb-4"
                         />
@@ -392,7 +392,14 @@ function App() {
                         </p>
                         <p className="text-slate-500 text-sm mt-2">
                           Real-time A4 layout
-                        </p>
+                        </p> */}
+                        <Image
+                          src="/resume-preview.png"
+                          alt="Resume preview"
+                          width={360}
+                          height={240}
+                          className="rounded-lg"
+                        />
                       </div>
                     </div>
                   </div>
@@ -466,28 +473,25 @@ function App() {
                 <div className="mt-8 sm:mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {[
                     {
-                      name: "Sarah Chen",
-                      role: "Product Manager",
+                      name: "Abdul Hakim",
+                      role: "Business Student",
                       content:
-                        "This platform helped me land my dream job at Google. The AI structuring is incredible!",
-                      avatar:
-                        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
+                        "This platform helped me land my dream job. The AI structuring is incredible!",
+                      avatar: "/avatar.png",
                     },
                     {
                       name: "Marcus Rodriguez",
                       role: "Software Engineer",
                       content:
                         "From messy notes to professional resume in minutes. Best tool I've used!",
-                      avatar:
-                        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+                      avatar: "/avatar.png",
                     },
                     {
                       name: "Emily Watson",
                       role: "UX Designer",
                       content:
                         "The templates are beautiful and ATS-friendly. Got 3 interviews in first week!",
-                      avatar:
-                        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+                      avatar: "/avatar.png",
                     },
                   ].map((testimonial, index) => (
                     <div
@@ -598,7 +602,20 @@ function App() {
                   <textarea
                     value={freeFormInput}
                     onChange={(e) => setFreeFormInput(e.target.value)}
-                    placeholder={`Example:\n\nSenior Software Engineer, TechCorp (2019 - Present)\n- Led a team of 3 developers building React/Next.js applications.\n- Improved API response times by 30%.\n- Worked with React, Next.js, Node, PostgreSQL, AWS.\n\nPrevious Role...\nSkills...\nEducation...\nProjects...`}
+                    placeholder={`Example:Hi, I’m Jane Doe! I’m a UI/UX designer based in Kuala Lumpur, and I’ve been working in the design field for about five years. I really love creating digital experiences that feel intuitive and engaging. I’m comfortable with tools like Figma, Adobe XD, and Sketch, and I have a basic understanding of HTML and CSS, which helps me communicate better with developers.
+
+Most recently, I worked at Creative Studio as a Senior UI/UX Designer. During my time there, I led a major redesign of our main product which ended up increasing user retention by around 25%. I also enjoyed mentoring a few junior designers and collaborating with different teams to improve overall workflows. Before that, I was at PixelWorks where I designed responsive web and mobile interfaces for multiple clients. That role really helped me sharpen my prototyping and user testing skills.
+
+I graduated with a Bachelor of Design (Graphic & Interactive) from the University of Malaya in 2018. Since then, I’ve continued learning on my own through certifications, including the Google UX Design Certificate and Certified Usability Analyst (CUA).
+
+Some projects I’m really proud of include the TravelMate App, a mobile app I designed from concept to prototype, and the ShopEasy E-commerce redesign, where I improved the checkout flow and helped reduce cart abandonment by about 18%.
+
+In terms of languages, I’m fluent in English and a native Malay speaker. When I’m not designing, I enjoy attending design workshops and keeping up with the latest UI/UX trends. 
+
+If you need my contact details:
+Email: jane.doe@example.com
+Phone: +60 12-345 6789
+LinkedIn: linkedin.com/in/janedoe `}
                     rows={12}
                     className="w-full px-3 sm:px-4 py-3 rounded-xl border border-slate-700 bg-slate-900/80 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/60 font-mono text-xs sm:text-sm text-slate-100 shadow-inner resize-vertical"
                   />
@@ -714,14 +731,14 @@ function App() {
                   {/* Contact Info Cards */}
                   <div className="space-y-4 sm:space-y-6">
                     {[
-                      {
-                        icon: User,
-                        title: "Your Expert",
-                        content: "Afiq",
-                        description: "Resume Specialist & Career Advisor",
-                        color: "blue",
-                        href: null,
-                      },
+                      // {
+                      //   icon: User,
+                      //   title: "Your Expert",
+                      //   content: "Afiq",
+                      //   description: "Resume Specialist & Career Advisor",
+                      //   color: "blue",
+                      //   href: null,
+                      // },
                       {
                         icon: Mail,
                         title: "Email Us",
@@ -738,14 +755,14 @@ function App() {
                         color: "cyan",
                         href: "https://wa.me/60142271936",
                       },
-                      {
-                        icon: Heart,
-                        title: "Support",
-                        content: "24/7 Help Center",
-                        description: "Comprehensive guides & documentation",
-                        color: "pink",
-                        href: "#",
-                      },
+                      // {
+                      //   icon: Heart,
+                      //   title: "Support",
+                      //   content: "24/7 Help Center",
+                      //   description: "Comprehensive guides & documentation",
+                      //   color: "pink",
+                      //   href: "#",
+                      // },
                     ].map((item, index) => {
                       const Component = item.href ? "a" : "div";
                       return (
@@ -1032,12 +1049,12 @@ function App() {
                     color: "hover:bg-green-500",
                     label: "WhatsApp",
                   },
-                  {
-                    icon: Users,
-                    href: "#",
-                    color: "hover:bg-purple-500",
-                    label: "Community",
-                  },
+                  // {
+                  //   icon: Users,
+                  //   href: "#",
+                  //   color: "hover:bg-purple-500",
+                  //   label: "Community",
+                  // },
                 ].map((social, index) => (
                   <a
                     key={index}
@@ -1053,7 +1070,7 @@ function App() {
             </div>
 
             {/* Quick Links */}
-            <div className="space-y-6">
+            {/* <div className="space-y-6">
               <h4 className="text-lg font-semibold text-white flex items-center gap-2">
                 <Sparkles size={18} className="text-amber-400" />
                 Product
@@ -1077,10 +1094,10 @@ function App() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             {/* Support */}
-            <div className="space-y-6">
+            {/* <div className="space-y-6">
               <h4 className="text-lg font-semibold text-white flex items-center gap-2">
                 <Heart size={18} className="text-pink-400" />
                 Support
@@ -1100,7 +1117,7 @@ function App() {
                   )
                 )}
               </ul>
-            </div>
+            </div> */}
           </div>
 
           {/* Trust Badges */}
