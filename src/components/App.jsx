@@ -412,7 +412,7 @@ function App() {
               <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-8 sm:mb-12">
                   <h2 className="text-2xl sm:text-3xl font-bold text-slate-50 mb-3 sm:mb-4">
-                    Trusted by Professionals Worldwide
+                    Trusted by Professionals in Malaysia
                   </h2>
                   <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
                     Join thousands of users who have transformed their careers
@@ -420,7 +420,7 @@ function App() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {[
                     {
                       icon: Users,
@@ -440,12 +440,12 @@ function App() {
                       label: "Average Time",
                       color: "emerald",
                     },
-                    {
-                      icon: Globe,
-                      number: "50+",
-                      label: "Countries",
-                      color: "purple",
-                    },
+                    // {
+                    //   icon: Globe,
+                    //   number: "50+",
+                    //   label: "Countries",
+                    //   color: "purple",
+                    // },
                   ].map((stat, index) => (
                     <div
                       key={index}
@@ -480,14 +480,14 @@ function App() {
                       avatar: "/avatar.png",
                     },
                     {
-                      name: "Marcus Rodriguez",
+                      name: "Sarah",
                       role: "Software Engineer",
                       content:
                         "From messy notes to professional resume in minutes. Best tool I've used!",
                       avatar: "/avatar.png",
                     },
                     {
-                      name: "Emily Watson",
+                      name: "Amir",
                       role: "UX Designer",
                       content:
                         "The templates are beautiful and ATS-friendly. Got 3 interviews in first week!",
@@ -1163,7 +1163,7 @@ LinkedIn: linkedin.com/in/janedoe `}
               <div className="flex items-center gap-2 text-slate-500 text-sm">
                 <span>Made with</span>
                 <Sparkles size={14} className="text-amber-400" />
-                <span>for job seekers worldwide</span>
+                <span>for Malaysian job seekers</span>
               </div>
             </div>
           </div>
