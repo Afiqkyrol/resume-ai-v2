@@ -4,12 +4,13 @@ export const exportToPdfServer = async ({
   html,
   filename = "resume.pdf",
   billCode,
+  template,
 }) => {
   try {
     const res = await fetch("/api/export-pdf", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html, filename, billCode }),
+      body: JSON.stringify({ html, filename, billCode, template }),
     });
     if (!res.ok) {
       const detail = await res.text();

@@ -83,7 +83,7 @@ function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [freeFormInput, setFreeFormInput] = useState("");
   const [resumeData, setResumeData] = useState(null);
-  const [selectedTemplate, setSelectedTemplate] = useState("modern");
+  const [selectedTemplate, setSelectedTemplate] = useState("classic");
   const [resumeStyle, setResumeStyle] = useState({
     fontSize: 11,
     lineHeight: 1.5,
@@ -100,6 +100,7 @@ function App() {
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerPhone, setBuyerPhone] = useState("");
   const [buyerError, setBuyerError] = useState("");
+  const [isExporting, setIsExporting] = useState(false);
 
   const handleGenerate = async () => {
     // if (!process.env.VERCEL) {
@@ -157,6 +158,7 @@ function App() {
             /\s/g,
             "_"
           )}_Resume.pdf`,
+          template: selectedTemplate,
         });
       }
     }
@@ -224,14 +226,14 @@ function App() {
 
   const templates = [
     {
-      value: "modern",
-      label: "Modern",
-      description: "Clean and professional with blue accents",
-    },
-    {
       value: "classic",
       label: "Classic",
       description: "Traditional format with centered header",
+    },
+    {
+      value: "modern",
+      label: "Modern",
+      description: "Clean and professional with blue accents",
     },
     {
       value: "minimal",
@@ -317,11 +319,28 @@ function App() {
                 <span className="ml-1">Edit</span>
               </button>
               <button
-                onClick={() => setShowPaymentModal(true)}
+                onClick={async () => {
+                  if (selectedTemplate === "classic") {
+                    setIsExporting(true);
+                    await handleExportPDF();
+                    setIsExporting(false);
+                  } else {
+                    setShowPaymentModal(true);
+                  }
+                }}
                 className="inline-flex items-center gap-2 px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold text-slate-950 bg-emerald-400 shadow-lg shadow-emerald-600/30 hover:shadow-xl hover:bg-emerald-300 transition-all"
               >
-                <Download size={16} />
-                <span className="hidden sm:inline">Export PDF</span>
+                {isExporting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin"></div>
+                    <span className="hidden sm:inline">Exporting</span>
+                  </>
+                ) : (
+                  <>
+                    <Download size={16} />
+                    <span className="hidden sm:inline">Export PDF</span>
+                  </>
+                )}
               </button>
             </div>
           )}
@@ -352,7 +371,9 @@ function App() {
                   <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
                     Paste your career story. The builder structures it into a
                     professional, ATS-friendly layout you can refine, style, and
-                    export as a pixel-perfect A4 PDF.
+                    export as a pixel-perfect A4 PDF. Start with our free
+                    professional template, or unlock more premium designs
+                    anytime.
                   </p>
                   <div className="flex flex-wrap gap-2 sm:gap-3 text-xs sm:text-[11px] font-medium">
                     <span className="px-2 sm:px-3 py-1 rounded-full bg-blue-500/20 text-blue-100 border border-blue-400/40">
@@ -363,6 +384,9 @@ function App() {
                     </span>
                     <span className="px-2 sm:px-3 py-1 rounded-full bg-slate-900 text-slate-100 border border-slate-700">
                       ✓ No design skills needed
+                    </span>
+                    <span className="px-2 sm:px-3 py-1 rounded-full bg-yellow-900 text-yellow-100 border border-slate-700">
+                      ✓ Free template available
                     </span>
                   </div>
                   <div className="flex flex-wrap items-center gap-3 sm:gap-4">
@@ -899,6 +923,11 @@ LinkedIn: linkedin.com/in/janedoe `}
                             Active
                           </span>
                         )}
+                        {template.value === "classic" && (
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/90 text-slate-950 border border-emerald-300/60">
+                            Free
+                          </span>
+                        )}
                       </h4>
                       <p className="text-[11px] text-slate-300 leading-relaxed">
                         {template.description}
@@ -947,7 +976,13 @@ LinkedIn: linkedin.com/in/janedoe `}
                       </p>
                     </div>
                     <button
-                      onClick={handleExportPDF}
+                      onClick={async () => {
+                        if (selectedTemplate === "classic") {
+                          await handleExportPDF();
+                        } else {
+                          setShowPaymentModal(true);
+                        }
+                      }}
                       className="inline-flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900 px-3 py-1.5 text-[11px] text-slate-100 hover:bg-slate-800 transition w-full sm:w-auto justify-center"
                     >
                       <Download size={13} />

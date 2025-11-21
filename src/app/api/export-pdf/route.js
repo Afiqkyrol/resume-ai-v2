@@ -7,42 +7,45 @@ export const dynamic = "force-dynamic";
 export async function POST(req) {
   try {
     const body = await req.json();
-    let { html, filename = "resume.pdf", billCode } = body || {};
+    let { html, filename = "resume.pdf", billCode, template } = body || {};
 
     // Require a valid payment before allowing server-side PDF export
     const isDev = !process.env.VERCEL;
-    if (!billCode) {
-      return new Response(
-        JSON.stringify({ error: "billCode required for PDF export" }),
-        { status: 400 }
-      );
-    }
-    let isPaid = false;
-    if (isDev && String(billCode).startsWith("MOCK-")) {
-      isPaid = true;
-    } else {
-      try {
-        const base = process.env.TOYYIBPAY_BASE_URL || "https://toyyibpay.com";
-        const statusUrl = `${base}/index.php/api/getBillTransactions`;
-        const form = new URLSearchParams();
-        form.set("billCode", billCode);
-        const resp = await fetch(statusUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: form.toString(),
-        });
-        const json = await resp.json().catch(() => []);
-        isPaid =
-          Array.isArray(json) && json.some((t) => t.billpaymentStatus === "1");
-      } catch (e) {
-        isPaid = false;
+    const isClassicFree = template === "classic";
+    if (!isClassicFree) {
+      if (!billCode) {
+        return new Response(
+          JSON.stringify({ error: "billCode required for PDF export" }),
+          { status: 400 }
+        );
       }
-    }
-    if (!isPaid) {
-      return new Response(
-        JSON.stringify({ error: "Payment not verified for this billCode" }),
-        { status: 402 }
-      );
+      let isPaid = false;
+      if (isDev && String(billCode).startsWith("MOCK-")) {
+        isPaid = true;
+      } else {
+        try {
+          const base = process.env.TOYYIBPAY_BASE_URL || "https://toyyibpay.com";
+          const statusUrl = `${base}/index.php/api/getBillTransactions`;
+          const form = new URLSearchParams();
+          form.set("billCode", billCode);
+          const resp = await fetch(statusUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: form.toString(),
+          });
+          const json = await resp.json().catch(() => []);
+          isPaid =
+            Array.isArray(json) && json.some((t) => t.billpaymentStatus === "1");
+        } catch (e) {
+          isPaid = false;
+        }
+      }
+      if (!isPaid) {
+        return new Response(
+          JSON.stringify({ error: "Payment not verified for this billCode" }),
+          { status: 402 }
+        );
+      }
     }
 
     if (!html) {
