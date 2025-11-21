@@ -359,7 +359,7 @@ function App() {
                 <div className="space-y-4 sm:space-y-6">
                   <div className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-slate-100 px-3 py-1 text-xs sm:text-[11px] font-medium shadow-sm border border-slate-700">
                     <Sparkles size={14} className="text-amber-300" />
-                    <span>AI-powered, ATS-friendly résumé builder</span>
+                    <span>Malaysia’s Most Trusted AI Resume Builder</span>
                   </div>
                   <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold tracking-tight text-slate-50">
                     Turn your experience into a{" "}
@@ -385,7 +385,7 @@ function App() {
                     <span className="px-2 sm:px-3 py-1 rounded-full bg-slate-900 text-slate-100 border border-slate-700">
                       ✓ No design skills needed
                     </span>
-                    <span className="px-2 sm:px-3 py-1 rounded-full bg-yellow-900 text-yellow-100 border border-slate-700">
+                    <span className="px-2 sm:px-3 py-1 rounded-full bg-yellow-900/20 text-yellow-100 border border-slate-700">
                       ✓ Free template available
                     </span>
                   </div>
@@ -396,7 +396,7 @@ function App() {
                       <span className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border border-slate-900" /> */}
                     </div>
                     <p className="text-xs sm:text-[11px] text-slate-400">
-                      Used by developers, PMs, designers and students.
+                      Used widely by Malaysian developers, PMs, designers and students.
                     </p>
                   </div>
                 </div>
