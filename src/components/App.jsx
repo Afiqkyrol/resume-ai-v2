@@ -136,6 +136,7 @@ function App() {
       setResumeData(obj);
       setStep("edit");
       setIsGenerating(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (e) {
       console.error(e);
       setIsGenerating(false);
